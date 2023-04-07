@@ -1,1 +1,3 @@
 Implemented features
+
+Bug fixed
