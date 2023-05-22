@@ -7,5 +7,3 @@ code changes
 another changes
 
 bug fixed
-
-bug fixed
