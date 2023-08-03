@@ -6,7 +6,3 @@ code changes
 
 another changes
 
-bug fixed
- change something
-
-bug fixed
