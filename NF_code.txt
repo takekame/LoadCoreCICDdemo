@@ -3,6 +3,3 @@ Implemented features
 Bug fixed
 
 code changes
-
-another changes
-
