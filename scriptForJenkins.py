@@ -50,7 +50,7 @@ class Requests(object):
 
 
 class Middleware(Requests):
-    def __init__(self, ip, username="tkamei", password="tkamei", logger=None, enablehttp2=False):
+    def __init__(self, ip, username="demo", password="demo", logger=None, enablehttp2=False):
         self.logger = logger
         self.httpv2 = enablehttp2
         if username != None:
@@ -220,41 +220,6 @@ class Middleware(Requests):
         # if state is ERROR, stop the test and print the error message.
   #      self.testcase.assertTrue(False, msg='State: {} - Error MSG: {}'.format(state.json()['state'], state.json()['message']))
 
-
-    def abortTest(self, sessionID, result='SUCCESS', wait=40, statusCode=202):
-        response = self.post('/api/v2/sessions/{0}/test-run/operations/abort'.format(sessionID), headers=self.headers)
-        # self.logger.debug(pformat(response.content))
-        # self.logger.debug(pformat(response.status_code))
-
-#        self.testcase.assertEquals(response.status_code, statusCode)
-
-        rest_url = '/api/v2/sessions/{0}/test-run/operations/abort/{1}'.format(sessionID, response.json()['id'])
-
-        while wait > 0:
-            try:
-                state = self.get(rest_url, headers=self.headers)
-                # self.logger.debug(pformat(state))
-                # self.logger.debug(pformat(state.content))
-
-                if state.json()['state'] == result:
-                    return state.json()
-
-                if state.json()['state'] == 'ERROR':  # break when start goes to ERROR state
-                    break
-
-                wait -= 1
-                time.sleep(2)
-                #self.logger.debug(pformat(state.json()))
-
-            except:
-                return response.json()
-
- #       else:
- #           self.testcase.assertTrue(False, msg='Test failed to stop')
-
-        # if state is ERROR, stop the test and print the error message.
-  #      self.testcase.assertTrue(False, msg='State: {} - Error MSG: {}'.format(state.json()['state'], state.json()['message']))
-
     def deleteSession(self, sessionID, statusCode=204):
         response = self.delete('/api/v2/sessions/{0}'.format(sessionID), headers=self.headers)
         # print response
@@ -392,7 +357,8 @@ if __name__ == '__main__':
 
     print("---- Connecting to LoadCore MW ----")
     #mw = Middleware(ip='10.39.18.101')
-    mw = Middleware(ip='35.79.112.74')
+    #mw = Middleware(ip='35.79.112.74')
+    mw = Middleware(ip='57.181.113.254')
     #mw = Middleware(ip='3.115.160.211')
     #mw = (ip='10.39.18.103', username='LC_Demo',password='admin')
     print("---- Creating NewSession from imported config ----")
@@ -439,7 +405,7 @@ if __name__ == '__main__':
     print("---- Initiated StopTest ----") 
     endTime = datetime.datetime.now()   # take time after test ends. Will be used inside HTML report
     print(endTime)
-    mw.abortTest(newSessionID)
+    mw.stopTest(newSessionID)
     print(mw.getSessionStatus(newSessionID))
     
 #    if sys.version_info.major == 2:
